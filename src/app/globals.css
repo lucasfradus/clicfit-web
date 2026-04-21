@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ink: #0a0a0a;
+  --color-cream: #f5f1e8;
+  --color-yellow: #fbfa3f;
+  --color-yellow-deep: #e8d628;
+
+  --font-display: var(--font-anton);
+  --font-serif: var(--font-fraunces);
+  --font-sans: var(--font-geist);
+
+  --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+@utility display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+@utility italic-serif {
+  font-family: var(--font-serif), serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+}
+
+@utility container-clic {
+  max-width: 90rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+
+  @media (min-width: 48rem) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  @media (min-width: 64rem) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
 }
