@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { disciplinas } from "@/lib/content/disciplinas";
 
 export function Disciplinas() {
@@ -28,24 +27,20 @@ export function Disciplinas() {
           {disciplinas.map((d, index) => {
             const num = String(index + 1).padStart(2, "0");
             return (
-              <li key={d.slug}>
-                <Link
-                  href={`/disciplinas/${d.slug}`}
-                  className="group grid grid-cols-[40px_1fr] items-baseline gap-x-4 gap-y-2 border-b border-cream/10 py-7 transition-colors hover:bg-cream/5 lg:grid-cols-[40px_1fr_2fr_1fr] lg:gap-8"
-                >
-                  <span className="text-xs uppercase tracking-widest text-cream/40">
-                    {num}
-                  </span>
-                  <span className="display text-4xl transition-colors group-hover:text-yellow md:text-6xl">
-                    {d.name}
-                  </span>
-                  <span className="col-span-2 text-sm text-cream/70 md:text-base lg:col-span-1">
-                    {d.short}
-                  </span>
-                  <span className="hidden text-right text-xs uppercase tracking-widest text-cream/40 transition-colors group-hover:text-yellow lg:block">
-                    {d.tag} →
-                  </span>
-                </Link>
+              <li
+                key={d.slug}
+                className="grid grid-cols-[40px_1fr] items-baseline gap-x-4 gap-y-2 border-b border-cream/10 py-7 lg:grid-cols-[40px_1fr_2fr_1fr] lg:gap-8"
+              >
+                <span className="text-xs uppercase tracking-widest text-cream/40">
+                  {num}
+                </span>
+                <span className="display text-4xl md:text-6xl">{d.name}</span>
+                <span className="col-span-2 text-sm text-cream/70 md:text-base lg:col-span-1">
+                  {d.short}
+                </span>
+                <span className="hidden text-right text-xs uppercase tracking-widest text-cream/40 lg:block">
+                  {d.tag}
+                </span>
               </li>
             );
           })}

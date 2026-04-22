@@ -61,6 +61,26 @@ export function sedeFaqSchema(faqs: { question: string; answer: string }[]) {
   };
 }
 
+export function nutricionServiceSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Asesoramiento nutricional + InBody",
+    description:
+      "Medición InBody mensual y consulta con nutricionista personalizada, incluida en la membresía CLIC FIT.",
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    areaServed: {
+      "@type": "Place",
+      name: "Zona norte de Buenos Aires",
+    },
+    serviceType: "Nutrición deportiva",
+  };
+}
+
 export function franchiseOfferSchema() {
   return {
     "@context": "https://schema.org",

@@ -27,7 +27,7 @@ export function Nutricion() {
               diseñamos tu plan con datos reales.
             </p>
             <div className="mt-8">
-              <LinkButton href="#" variant="primary">
+              <LinkButton href="/nutricion" variant="primary">
                 Conocer el programa →
               </LinkButton>
             </div>
