@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/content/site";
 const STATS: { value: string; label: string }[] = [
   { value: "5+", label: "Disciplinas" },
   { value: "3", label: "Sedes" },
-  { value: "500+", label: "Alumnos activos" },
+  { value: "∞", label: "Comunidad activa" },
   { value: "14h", label: "Clases por día" },
 ];
 

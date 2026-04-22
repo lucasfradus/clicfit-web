@@ -3,7 +3,7 @@ import { LinkButton } from "@/components/ui/Button";
 const METRICS: { value: string; label: string }[] = [
   { value: "%", label: "Grasa corporal" },
   { value: "kg", label: "Masa muscular" },
-  { value: "∑", label: "Proteínas" },
+  { value: "∑", label: "Balance hídrico" },
   { value: "Δ", label: "Progreso mensual" },
 ];
 

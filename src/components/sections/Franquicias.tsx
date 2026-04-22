@@ -36,9 +36,6 @@ export function Franquicias() {
             >
               Pedir información →
             </LinkButton>
-            <LinkButton href="#" variant="outline">
-              Descargar brochure
-            </LinkButton>
           </div>
         </div>
       </div>
