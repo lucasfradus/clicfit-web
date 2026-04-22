@@ -1,5 +1,4 @@
-import { LinkButton } from "@/components/ui/Button";
-import { waLinkClaseGratis } from "@/lib/whatsapp";
+import { ClaseGratisButton } from "@/components/ui/ClaseGratisModal";
 
 export function CtaFinal() {
   return (
@@ -16,15 +15,9 @@ export function CtaFinal() {
           Reservá tu primera clase gratis. Sin compromiso, sin letra chica.
         </p>
         <div className="mt-10 flex justify-center">
-          <LinkButton
-            href={waLinkClaseGratis()}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="dark"
-            className="px-10 py-5 text-sm"
-          >
+          <ClaseGratisButton variant="dark" className="px-10 py-5 text-sm">
             Reservar ahora →
-          </LinkButton>
+          </ClaseGratisButton>
         </div>
       </div>
     </section>

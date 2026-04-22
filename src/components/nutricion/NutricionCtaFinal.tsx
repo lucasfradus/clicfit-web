@@ -1,6 +1,5 @@
-import { LinkButton } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { waLinkClaseGratis } from "@/lib/whatsapp";
+import { ClaseGratisButton } from "@/components/ui/ClaseGratisModal";
 
 export function NutricionCtaFinal() {
   return (
@@ -23,15 +22,10 @@ export function NutricionCtaFinal() {
           espera.
         </p>
         <div className="mt-10 flex justify-center">
-          <LinkButton
-            href={waLinkClaseGratis()}
-            target="_blank"
-            rel="noopener noreferrer"
-            variant="primary"
-          >
+          <ClaseGratisButton variant="primary">
             <WhatsAppIcon className="size-5" />
             Probá una clase gratis
-          </LinkButton>
+          </ClaseGratisButton>
         </div>
       </div>
     </section>

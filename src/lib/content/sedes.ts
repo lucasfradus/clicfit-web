@@ -1,3 +1,5 @@
+import contacts from "@/contacts.json";
+
 export type Sede = {
   slug: string;
   name: string;
@@ -26,7 +28,9 @@ export type Sede = {
   featured: string[];
 };
 
-export const sedes: Sede[] = [
+type SedeStatic = Omit<Sede, "hours" | "whatsappNumber">;
+
+const sedesStatic: SedeStatic[] = [
   {
     slug: "tortugas",
     name: "Tortugas",
@@ -40,13 +44,7 @@ export const sedes: Sede[] = [
     },
     coordinates: { lat: -34.4435, lng: -58.8831 },
     phone: "+54 9 11 2689-4398",
-    whatsappNumber: "5491126894398",
     email: "tortugas@clicfit.ar",
-    hours: {
-      weekdays: { opens: "06:45", closes: "20:45" },
-      saturday: { opens: "09:00", closes: "12:00" },
-      sunday: null,
-    },
     amenities: ["Vestuarios", "Duchas", "Estacionamiento propio"],
     disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
     heroImage: "/img/sedes/tortugas/hero.jpg",
@@ -91,13 +89,7 @@ export const sedes: Sede[] = [
     },
     coordinates: { lat: -34.4659, lng: -58.8942 },
     phone: "+54 9 11 2689-4398",
-    whatsappNumber: "5491126894398",
     email: "pilar@clicfit.ar",
-    hours: {
-      weekdays: { opens: "07:45", closes: "20:45" },
-      saturday: { opens: "10:00", closes: "12:00" },
-      sunday: null,
-    },
     amenities: ["Vestuarios", "Duchas", "Estacionamiento"],
     disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
     heroImage: "/img/sedes/pilar/hero.jpg",
@@ -127,13 +119,7 @@ export const sedes: Sede[] = [
     },
     coordinates: { lat: -34.4401, lng: -58.8798 },
     phone: "+54 9 11 2689-4398",
-    whatsappNumber: "5491126894398",
     email: "officepark@clicfit.ar",
-    hours: {
-      weekdays: { opens: "08:00", closes: "21:00" },
-      saturday: null,
-      sunday: null,
-    },
     amenities: ["Vestuarios", "Duchas", "Estacionamiento"],
     disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
     heroImage: "/img/sedes/office-park/hero.jpg",
@@ -155,6 +141,27 @@ export const sedes: Sede[] = [
     ],
   },
 ];
+
+type SedeContacts = Record<
+  string,
+  { whatsapp: string; hours: Sede["hours"] }
+>;
+
+const sedeContacts = contacts.sedes as SedeContacts;
+
+export const sedes: Sede[] = sedesStatic.map((s) => {
+  const c = sedeContacts[s.slug];
+  if (!c) {
+    throw new Error(
+      `Falta info de contacto para la sede "${s.slug}" en contacts.json`,
+    );
+  }
+  return {
+    ...s,
+    whatsappNumber: c.whatsapp,
+    hours: c.hours,
+  };
+});
 
 export function getSedeBySlug(slug: string): Sede | null {
   return sedes.find((s) => s.slug === slug) ?? null;

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { siteConfig } from "@/lib/content/site";
-import { waLinkClaseGratis } from "@/lib/whatsapp";
+import { ClaseGratisTrigger } from "@/components/ui/ClaseGratisModal";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -60,7 +60,6 @@ export function Nav() {
               height={36}
               priority
               className="h-7 w-auto md:h-9"
-              unoptimized
             />
           </Link>
 
@@ -77,14 +76,11 @@ export function Nav() {
           </div>
 
           <div className="flex items-center gap-3">
-            <a
-              href={waLinkClaseGratis()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <ClaseGratisTrigger
               className="whitespace-nowrap bg-yellow px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-ink transition-colors hover:bg-white md:px-5 md:py-3 md:text-xs"
             >
               Clase gratis
-            </a>
+            </ClaseGratisTrigger>
             <button
               type="button"
               onClick={() => setMenuOpen((v) => !v)}

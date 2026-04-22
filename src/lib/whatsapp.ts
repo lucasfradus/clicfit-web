@@ -1,4 +1,5 @@
 import { siteConfig } from "./content/site";
+import contacts from "@/contacts.json";
 
 export function waLink(
   message: string,
@@ -15,14 +16,9 @@ export function waLinkSede(sedeName: string, phone?: string): string {
   );
 }
 
-export function waLinkClaseGratis(): string {
-  return waLink(
-    "Hola Clic! Me interesa probar una clase gratis. ¿Me pasan info?",
-  );
-}
-
 export function waLinkFranquicia(): string {
   return waLink(
     "Hola Clic! Me interesa información sobre franquicias. ¿Pueden contactarme?",
+    contacts.franquicias.whatsapp,
   );
 }

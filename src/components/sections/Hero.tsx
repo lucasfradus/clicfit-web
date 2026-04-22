@@ -1,7 +1,7 @@
 import { LinkButton } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
+import { ClaseGratisButton } from "@/components/ui/ClaseGratisModal";
 import { siteConfig } from "@/lib/content/site";
-import { waLinkClaseGratis } from "@/lib/whatsapp";
 
 const STATS: { value: string; label: string }[] = [
   { value: "5+", label: "Disciplinas" },
@@ -45,15 +45,10 @@ export function Hero() {
               adapta a tu objetivo. No es un gimnasio más.
             </p>
             <div className="flex flex-col gap-3">
-              <LinkButton
-                href={waLinkClaseGratis()}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="primary"
-              >
+              <ClaseGratisButton variant="primary">
                 <WhatsAppIcon className="size-5" />
                 Probá una clase gratis
-              </LinkButton>
+              </ClaseGratisButton>
               <LinkButton href="/sedes" variant="outline">
                 Ver sedes →
               </LinkButton>

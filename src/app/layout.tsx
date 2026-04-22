@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Anton, Fraunces, Geist } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/content/site";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { ClaseGratisProvider } from "@/components/ui/ClaseGratisModal";
 
 const anton = Anton({
   subsets: ["latin"],
@@ -52,13 +54,11 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
   },
   robots: {
     index: true,
@@ -68,6 +68,9 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
     },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || undefined,
   },
 };
 
@@ -82,10 +85,15 @@ export default function RootLayout({
       className={`${anton.variable} ${fraunces.variable} ${geist.variable}`}
     >
       <body className="antialiased">
-        <Nav />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppFloat />
+        <ClaseGratisProvider>
+          <Nav />
+          <main>{children}</main>
+          <Footer />
+          <WhatsAppFloat />
+        </ClaseGratisProvider>
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </body>
     </html>
   );

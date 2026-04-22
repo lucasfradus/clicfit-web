@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/content/site";
 import { sedes } from "@/lib/content/sedes";
-import { waLinkClaseGratis } from "@/lib/whatsapp";
+import { ClaseGratisTrigger } from "@/components/ui/ClaseGratisModal";
 
 export function Footer() {
   return (
@@ -16,7 +16,6 @@ export function Footer() {
               width={120}
               height={36}
               className="mb-4 h-9 w-auto"
-              unoptimized
             />
             <p className="max-w-xs text-sm leading-relaxed text-cream/60">
               {siteConfig.tagline}. Entrenamiento y nutrición en zona norte.
@@ -38,9 +37,9 @@ export function Footer() {
           </FooterColumn>
 
           <FooterColumn title="Contacto">
-            <a href={waLinkClaseGratis()} target="_blank" rel="noopener noreferrer">
+            <ClaseGratisTrigger className="text-left">
               WhatsApp
-            </a>
+            </ClaseGratisTrigger>
             <a href={`mailto:${siteConfig.email}`}>Email</a>
             <a href={siteConfig.instagram} target="_blank" rel="noopener noreferrer">
               Instagram
@@ -72,7 +71,7 @@ function FooterColumn({
       <div className="mb-3.5 text-[10px] uppercase tracking-[0.2em] text-cream/40">
         {title}
       </div>
-      <div className="flex flex-col gap-2 text-sm text-cream/80 [&>a]:transition-colors [&>a]:hover:text-yellow">
+      <div className="flex flex-col gap-2 text-sm text-cream/80 [&>a]:transition-colors [&>a]:hover:text-yellow [&>button]:transition-colors [&>button]:hover:text-yellow">
         {children}
       </div>
     </div>
