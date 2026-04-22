@@ -61,6 +61,26 @@ export function sedeFaqSchema(faqs: { question: string; answer: string }[]) {
   };
 }
 
+export function franchiseOfferSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Offer",
+    name: "Franquicia CLIC FIT",
+    description:
+      "Franquicia de centro de entrenamiento funcional y CrossFit. Marca consolidada en zona norte de Buenos Aires con sistema operativo propio.",
+    category: "Franchise",
+    seller: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+    areaServed: {
+      "@type": "Place",
+      name: "Argentina",
+    },
+  };
+}
+
 export function breadcrumbSchema(items: { name: string; url: string }[]) {
   return {
     "@context": "https://schema.org",
