@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LinkButton } from "@/components/ui/Button";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { ClaseGratisButton } from "@/components/ui/ClaseGratisModal";
@@ -13,7 +14,22 @@ const STATS: { value: string; label: string }[] = [
 export function Hero() {
   return (
     <section className="relative flex min-h-screen items-center bg-ink pt-28 pb-16 md:pt-32">
-      <div className="container-clic w-full">
+      <Image
+        src="/img/sedes/hero.jpg"
+        alt="Entrenamiento en CLIC FIT"
+        fill
+        sizes="100vw"
+        className="object-cover"
+        priority
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.55) 40%, rgba(10,10,10,0.92) 100%)",
+        }}
+      />
+      <div className="container-clic relative z-10 w-full">
         <div className="grid gap-10 lg:grid-cols-[2fr_1fr] lg:items-end lg:gap-12">
           <div>
             <div

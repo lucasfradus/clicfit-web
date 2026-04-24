@@ -47,10 +47,10 @@ const sedesStatic: SedeStatic[] = [
     email: "tortugas@clicfit.ar",
     amenities: ["Vestuarios", "Duchas", "Estacionamiento propio"],
     disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
-    heroImage: "/img/sedes/tortugas/hero.jpg",
+    heroImage: "/img/sedes/tortugas/hero.jpeg",
     gallery: [
-      "/img/sedes/tortugas/1.jpg",
-      "/img/sedes/tortugas/2.jpg",
+      "/img/sedes/tortugas/1.jpeg",
+      "/img/sedes/tortugas/2.jpeg",
       "/img/sedes/tortugas/3.jpg",
       "/img/sedes/tortugas/4.jpg",
     ],
@@ -92,7 +92,7 @@ const sedesStatic: SedeStatic[] = [
     email: "pilar@clicfit.ar",
     amenities: ["Vestuarios", "Duchas", "Estacionamiento"],
     disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
-    heroImage: "/img/sedes/pilar/hero.jpg",
+    heroImage: "/img/sedes/pilar/hero.jpeg",
     gallery: [],
     transport: [
       {
@@ -122,11 +122,11 @@ const sedesStatic: SedeStatic[] = [
     email: "officepark@clicfit.ar",
     amenities: ["Vestuarios", "Duchas", "Estacionamiento"],
     disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
-    heroImage: "/img/sedes/office-park/hero.jpg",
+    heroImage: "/img/sedes/office/hero.jpeg",
     gallery: [
-      "/img/sedes/office-park/1.jpg",
-      "/img/sedes/office-park/2.jpg",
-      "/img/sedes/office-park/3.jpg",
+      "/img/sedes/office/1.jpeg",
+      "/img/sedes/office/2.jpeg",
+      "/img/sedes/office/3.jpeg",
     ],
     transport: [
       {
