@@ -41,7 +41,7 @@ export function SedeGallery({ sede }: { sede: Sede }) {
                 <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={src}
-                    alt={`${sede.name} ${i + 1}`}
+                    alt={`Instalaciones CLIC FIT ${sede.name} — foto ${i + 1}`}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover"

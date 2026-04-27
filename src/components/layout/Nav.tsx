@@ -58,6 +58,7 @@ export function Nav() {
               alt="CLIC FIT"
               width={180}
               height={36}
+              sizes="180px"
               priority
               className="h-7 w-auto md:h-9"
             />

@@ -12,9 +12,10 @@ export function Footer() {
           <div className="col-span-full md:col-span-1">
             <Image
               src={siteConfig.logoUrl}
-              alt={siteConfig.name}
+              alt="CLIC FIT"
               width={120}
               height={36}
+              sizes="120px"
               className="mb-4 h-9 w-auto"
             />
             <p className="max-w-xs text-sm leading-relaxed text-cream/60">

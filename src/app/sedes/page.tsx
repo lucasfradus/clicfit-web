@@ -69,7 +69,7 @@ export default function SedesPage() {
                   {imageExists ? (
                     <Image
                       src={sede.heroImage}
-                      alt={sede.name}
+                      alt={`CLIC FIT sede ${sede.name}, ${sede.zone}`}
                       fill
                       sizes="(min-width: 1024px) 42vw, 100vw"
                       className="object-cover"

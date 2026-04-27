@@ -26,11 +26,11 @@ export function SedeHero({ sede }: { sede: Sede }) {
       {heroExists && (
         <Image
           src={sede.heroImage}
-          alt={sede.name}
+          alt={`Clases en CLIC FIT ${sede.name}`}
           fill
           sizes="100vw"
           className="object-cover"
-          preload={true}
+          priority
         />
       )}
       {/* Gradient overlay */}
