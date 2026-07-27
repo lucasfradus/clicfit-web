@@ -10,6 +10,7 @@ import {
 } from "@/lib/seo";
 import { buildSedeFaqs } from "@/components/sede/SedeFaq";
 import { SedeHero } from "@/components/sede/SedeHero";
+import { SedeClases } from "@/components/reservas/SedeClases";
 import { SedeQuickInfo } from "@/components/sede/SedeQuickInfo";
 import { SedeDisciplinasStrip } from "@/components/sede/SedeDisciplinasStrip";
 import { SedeSchedule } from "@/components/sede/SedeSchedule";
@@ -78,6 +79,11 @@ export default async function SedePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemas) }}
       />
       <SedeHero sede={sede} />
+      <SedeClases
+        slug={sede.slug}
+        sedeName={sede.name}
+        whatsappNumber={sede.whatsappNumber}
+      />
       <SedeQuickInfo sede={sede} />
       <SedeDisciplinasStrip sede={sede} />
       <SedeSchedule sede={sede} />

@@ -9,8 +9,8 @@ import {
   type ButtonHTMLAttributes,
 } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
 import { sedes } from "@/lib/content/sedes";
-import { waLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
 type Ctx = { open: () => void; close: () => void };
@@ -97,40 +97,32 @@ function Modal({ onClose }: { onClose: () => void }) {
           Elegí tu <span className="italic-serif text-yellow">sede</span>.
         </h2>
         <p className="mt-4 text-sm leading-relaxed text-cream/70">
-          Te conectamos por WhatsApp con la sede elegida para coordinar tu
-          clase.
+          Elegí tu sede y reservá un horario para tu clase de prueba gratis.
+          Sin cargo, sin tarjeta.
         </p>
 
         <ul className="mt-6 border-y border-cream/10 divide-y divide-cream/10">
-          {sedes.map((sede) => {
-            const href = waLink(
-              `Hola Clic! Me interesa probar una clase gratis en la sede ${sede.name}. ¿Me pasan info?`,
-              sede.whatsappNumber,
-            );
-            return (
-              <li key={sede.slug}>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={onClose}
-                  className="group flex items-center justify-between gap-4 py-5 transition-colors hover:bg-cream/5"
-                >
-                  <div>
-                    <div className="display text-2xl transition-colors group-hover:text-yellow md:text-3xl">
-                      {sede.name}
-                    </div>
-                    <div className="mt-1 text-xs uppercase tracking-[0.2em] text-cream/60">
-                      {sede.zone} · {sede.address.locality}
-                    </div>
+          {sedes.map((sede) => (
+            <li key={sede.slug}>
+              <Link
+                href={`/sedes/${sede.slug}#clases`}
+                onClick={onClose}
+                className="group flex items-center justify-between gap-4 py-5 transition-colors hover:bg-cream/5"
+              >
+                <div>
+                  <div className="display text-2xl transition-colors group-hover:text-yellow md:text-3xl">
+                    {sede.name}
                   </div>
-                  <span className="text-yellow transition-transform group-hover:translate-x-1">
-                    →
-                  </span>
-                </a>
-              </li>
-            );
-          })}
+                  <div className="mt-1 text-xs uppercase tracking-[0.2em] text-cream/60">
+                    {sede.zone} · {sede.address.locality}
+                  </div>
+                </div>
+                <span className="text-yellow transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
