@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { ApiError, getClases, getSedesFitness, reservar } from "@/lib/reservas/api";
+import { getBackendSlug } from "@/lib/content/sedes";
 import type { Clase, Sede } from "@/lib/reservas/types";
 import { formatDayLong, formatTime } from "@/lib/reservas/format";
 
@@ -67,7 +68,7 @@ export default function ReservarPage() {
     (async () => {
       try {
         const sedes = await getSedesFitness();
-        const sede = sedes.find((s) => s.slug === slug);
+        const sede = sedes.find((s) => s.slug === getBackendSlug(slug));
         if (!sede) {
           if (!cancelled) setLoad({ status: "notfound" });
           return;

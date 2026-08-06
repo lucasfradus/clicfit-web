@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ApiError, getClases, getSedesFitness } from "@/lib/reservas/api";
+import { getBackendSlug } from "@/lib/content/sedes";
 import type { Clase } from "@/lib/reservas/types";
 import { dayKey, formatDayLong, formatTime } from "@/lib/reservas/format";
 import { waLinkSede } from "@/lib/whatsapp";
@@ -31,7 +32,8 @@ export function SedeClases({
     let cancelled = false;
     getSedesFitness()
       .then(async (sedes) => {
-        const sede = sedes.find((s) => s.slug === slug);
+        const backendSlug = getBackendSlug(slug);
+        const sede = sedes.find((s) => s.slug === backendSlug);
         if (!sede) {
           if (!cancelled) setState({ status: "unavailable" });
           return;
