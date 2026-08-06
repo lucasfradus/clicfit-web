@@ -2,6 +2,11 @@ import contacts from "@/contacts.json";
 
 export type Sede = {
   slug: string;
+  /**
+   * Slug con el que Clicnet conoce a la sede, cuando difiere del de la URL
+   * pública. Sólo hace falta cuando el backoffice la nombró distinto.
+   */
+  backendSlug?: string;
   name: string;
   zone: string;
   address: {
@@ -108,6 +113,7 @@ const sedesStatic: SedeStatic[] = [
   },
   {
     slug: "office-park",
+    backendSlug: "office-fitness",
     name: "Office Park",
     zone: "Panamericana",
     address: {
@@ -165,6 +171,15 @@ export const sedes: Sede[] = sedesStatic.map((s) => {
 
 export function getSedeBySlug(slug: string): Sede | null {
   return sedes.find((s) => s.slug === slug) ?? null;
+}
+
+/**
+ * Traduce el slug de la URL al slug con el que responde /api/public/sedes.
+ * Sin esto, una sede que en Clicnet se llama distinto queda como "no
+ * disponible" en la web aunque tenga la reserva online habilitada.
+ */
+export function getBackendSlug(slug: string): string {
+  return getSedeBySlug(slug)?.backendSlug ?? slug;
 }
 
 export function getHourBlocks(
