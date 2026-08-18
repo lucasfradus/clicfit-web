@@ -7,13 +7,22 @@ export interface Sede {
   nombre: string;
   direccion: string;
   ciudad: string;
+  localidad?: string | null;
+  zona?: string | null;
   email: string | null;
+  telefono?: string | null;
   descripcion: string | null;
+  caracteristicasWeb?: string[];
+  horaApertura?: string | null;
+  horaCierre?: string | null;
   imagenUrl: string | null;
+  imagenFoco?: { x: number; y: number };
   fotos: string[];
+  fotosDetalle?: Array<{ url: string; foco: { x: number; y: number } }>;
   whatsappUrl: string | null;
   googleMapsUrl: string | null;
   precioPrueba: number | null;
+  reservaOnline?: boolean;
 }
 
 export interface Actividad {

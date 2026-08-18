@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Image from "next/image";
 import Link from "next/link";
-import { sedes } from "@/lib/content/sedes";
+import { getDynamicSedes } from "@/lib/content/sedes";
 
 function publicFileExists(publicPath: string): boolean {
   const rel = publicPath.replace(/^\//, "");
@@ -14,7 +14,15 @@ function publicFileExists(publicPath: string): boolean {
   }
 }
 
-export function Sedes() {
+function isImageAvailable(p?: string | null): boolean {
+  if (!p) return false;
+  if (p.startsWith("http://") || p.startsWith("https://")) return true;
+  return publicFileExists(p);
+}
+
+export async function Sedes() {
+  const dynamicSedes = await getDynamicSedes();
+
   return (
     <section id="sedes" className="bg-cream py-24 text-ink md:py-32">
       <div className="container-clic">
@@ -30,8 +38,8 @@ export function Sedes() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
-          {sedes.map((sede, index) => {
-            const hasHero = publicFileExists(sede.heroImage);
+          {dynamicSedes.map((sede, index) => {
+            const hasHero = isImageAvailable(sede.heroImage);
             const num = String(index + 1).padStart(2, "0");
             return (
               <Link

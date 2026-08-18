@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { nutricion } from "@/lib/content/nutricion";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { ClaseGratisButton } from "@/components/ui/ClaseGratisModal";
@@ -21,17 +22,17 @@ export function NutricionHero() {
           className="mb-12 flex items-center gap-1 text-xs text-cream/70"
           aria-label="Breadcrumb"
         >
-          <a href="/" className="hover:text-cream transition-colors">
+          <Link href="/" className="hover:text-cream transition-colors">
             Inicio
-          </a>
+          </Link>
           <span className="text-cream/30"> / </span>
-          <a
+          <Link
             href="/nutricion"
             className="hover:text-cream transition-colors"
             aria-current="page"
           >
             Nutrición
-          </a>
+          </Link>
         </nav>
 
         <p className="mb-6 text-xs uppercase tracking-[0.3em] text-yellow">

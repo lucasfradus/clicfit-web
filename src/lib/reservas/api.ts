@@ -60,20 +60,48 @@ function toNumber(v: unknown): number | null {
   return null;
 }
 
-function normalizeSede(raw: Sede & { precioPrueba: unknown; fotos?: unknown }): Sede {
+function normalizeSede(
+  raw: Sede & {
+    precioPrueba: unknown;
+    fotos?: unknown;
+    caracteristicasWeb?: unknown;
+  },
+): Sede {
   return {
     ...raw,
     precioPrueba: toNumber(raw.precioPrueba),
     fotos: Array.isArray(raw.fotos)
       ? raw.fotos.filter((f): f is string => typeof f === "string" && f !== "")
       : [],
+    caracteristicasWeb: Array.isArray(raw.caracteristicasWeb)
+      ? raw.caracteristicasWeb.filter(
+          (c): c is string => typeof c === "string" && c.trim() !== "",
+        )
+      : [],
   };
 }
 
-export async function getSedesFitness(): Promise<Sede[]> {
-  const raw = await request<Array<Sede & { precioPrueba: unknown; fotos?: unknown }>>(
-    `/api/public/sedes?tipo=${TIPO}`,
-  );
+export async function getSedesFitness(options?: {
+  contexto?: "web" | "reservas";
+  revalidate?: number;
+}): Promise<Sede[]> {
+  const contexto = options?.contexto ?? "web";
+  const path = `/api/public/sedes?tipo=${TIPO}${
+    contexto === "web" ? "&contexto=web" : ""
+  }`;
+  const init: RequestInit & { next?: { revalidate?: number } } = {};
+  if (options?.revalidate !== undefined) {
+    init.next = { revalidate: options.revalidate };
+  }
+  const raw = await request<
+    Array<
+      Sede & {
+        precioPrueba: unknown;
+        fotos?: unknown;
+        caracteristicasWeb?: unknown;
+      }
+    >
+  >(path, init as RequestInit);
   return raw.map(normalizeSede);
 }
 

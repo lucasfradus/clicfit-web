@@ -174,6 +174,93 @@ export function getSedeBySlug(slug: string): Sede | null {
 }
 
 /**
+ * Combina una sede estática con los datos actualizados del backend de Clicnet.
+ */
+export function mergeSedeWithBackend(staticSede: Sede, backendSede?: import("@/lib/reservas/types").Sede | null): Sede {
+  if (!backendSede) return staticSede;
+
+  // Extraer número de WhatsApp si viene en formato URL (ej: https://wa.me/54911...)
+  let whatsappNumber = staticSede.whatsappNumber;
+  if (backendSede.whatsappUrl) {
+    const digits = backendSede.whatsappUrl.replace(/\D/g, "");
+    if (digits.length >= 10) {
+      whatsappNumber = digits;
+    }
+  }
+
+  // Horarios de lunes a viernes desde el backend si están configurados
+  const weekdayHours =
+    backendSede.horaApertura && backendSede.horaCierre
+      ? { opens: backendSede.horaApertura, closes: backendSede.horaCierre }
+      : staticSede.hours.weekdays;
+
+  return {
+    ...staticSede,
+    name: staticSede.name, // Mantiene el nombre de display del front
+    zone: backendSede.localidad || backendSede.ciudad || staticSede.zone,
+    address: {
+      ...staticSede.address,
+      street: backendSede.direccion || staticSede.address.street,
+      locality: backendSede.ciudad || staticSede.address.locality,
+    },
+    phone: backendSede.telefono || staticSede.phone,
+    whatsappNumber,
+    email: backendSede.email || staticSede.email,
+    heroImage: backendSede.imagenUrl || staticSede.heroImage,
+    gallery:
+      backendSede.fotos && backendSede.fotos.length > 0
+        ? backendSede.fotos
+        : staticSede.gallery,
+    featured:
+      backendSede.caracteristicasWeb && backendSede.caracteristicasWeb.length > 0
+        ? backendSede.caracteristicasWeb
+        : staticSede.featured,
+    hours: {
+      ...staticSede.hours,
+      weekdays: weekdayHours,
+    },
+  };
+}
+
+/**
+ * Obtiene la lista completa de sedes con los datos dinámicos del backend.
+ * Si la API no responde, devuelve la lista estática como fallback seguro.
+ */
+export async function getDynamicSedes(): Promise<Sede[]> {
+  try {
+    const { getSedesFitness } = await import("@/lib/reservas/api");
+    const backendSedes = await getSedesFitness({ contexto: "web", revalidate: 60 });
+    return sedes.map((s) => {
+      const bs = backendSedes.find(
+        (b) => b.slug === s.slug || b.slug === s.backendSlug,
+      );
+      return mergeSedeWithBackend(s, bs);
+    });
+  } catch {
+    return sedes;
+  }
+}
+
+/**
+ * Obtiene una sede por slug enriquecida con los datos del backend.
+ */
+export async function getDynamicSedeBySlug(slug: string): Promise<Sede | null> {
+  const staticSede = getSedeBySlug(slug);
+  if (!staticSede) return null;
+
+  try {
+    const { getSedesFitness } = await import("@/lib/reservas/api");
+    const backendSedes = await getSedesFitness({ contexto: "web", revalidate: 60 });
+    const bs = backendSedes.find(
+      (b) => b.slug === staticSede.slug || b.slug === staticSede.backendSlug,
+    );
+    return mergeSedeWithBackend(staticSede, bs);
+  } catch {
+    return staticSede;
+  }
+}
+
+/**
  * Traduce el slug de la URL al slug con el que responde /api/public/sedes.
  * Sin esto, una sede que en Clicnet se llama distinto queda como "no
  * disponible" en la web aunque tenga la reserva online habilitada.

@@ -13,8 +13,14 @@ function publicFileExists(publicPath: string): boolean {
   }
 }
 
+function isImageAvailable(p?: string | null): boolean {
+  if (!p) return false;
+  if (p.startsWith("http://") || p.startsWith("https://")) return true;
+  return publicFileExists(p);
+}
+
 export function SedeGallery({ sede }: { sede: Sede }) {
-  const availableImages = sede.gallery.filter((src) => publicFileExists(src));
+  const availableImages = sede.gallery.filter((src) => isImageAvailable(src));
 
   return (
     <section className="py-24 md:py-32 bg-ink">

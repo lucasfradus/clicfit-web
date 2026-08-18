@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import fs from "node:fs";
 import path from "node:path";
 import { sedes, type Sede } from "@/lib/content/sedes";
@@ -16,10 +17,16 @@ function publicFileExists(publicPath: string): boolean {
   }
 }
 
+function isImageAvailable(p?: string | null): boolean {
+  if (!p) return false;
+  if (p.startsWith("http://") || p.startsWith("https://")) return true;
+  return publicFileExists(p);
+}
+
 export function SedeHero({ sede }: { sede: Sede }) {
   const index = sedes.findIndex((s) => s.slug === sede.slug) + 1;
   const indexStr = String(index).padStart(2, "0");
-  const heroExists = publicFileExists(sede.heroImage);
+  const heroExists = isImageAvailable(sede.heroImage);
 
   return (
     <section className="relative min-h-[80vh] md:min-h-[85vh] bg-ink">
@@ -48,20 +55,20 @@ export function SedeHero({ sede }: { sede: Sede }) {
           aria-label="Breadcrumb"
           className="mb-12 flex items-center gap-1 text-xs text-cream/70"
         >
-          <a href="/" className="hover:text-yellow transition-colors">
+          <Link href="/" className="hover:text-yellow transition-colors">
             Inicio
-          </a>
+          </Link>
           <span className="text-cream/30"> / </span>
-          <a href="/sedes" className="hover:text-yellow transition-colors">
+          <Link href="/sedes" className="hover:text-yellow transition-colors">
             Sedes
-          </a>
+          </Link>
           <span className="text-cream/30"> / </span>
-          <a
+          <Link
             href={`/sedes/${sede.slug}`}
             className="hover:text-yellow transition-colors"
           >
             {sede.name}
-          </a>
+          </Link>
         </nav>
 
         {/* Eyebrow */}
