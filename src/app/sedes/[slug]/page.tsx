@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { sedes, getSedeBySlug } from "@/lib/content/sedes";
+import { sedes, getDynamicSedeBySlug } from "@/lib/content/sedes";
 import type { Sede } from "@/lib/content/sedes";
 import { siteConfig } from "@/lib/content/site";
 import {
@@ -31,7 +31,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const sede = getSedeBySlug(slug);
+  const sede = await getDynamicSedeBySlug(slug);
   if (!sede) return {};
   return {
     title: `Gimnasio en ${sede.name} · CrossFit, Funcional y HIIT`,
@@ -51,7 +51,7 @@ export default async function SedePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const maybeSede = getSedeBySlug(slug);
+  const maybeSede = await getDynamicSedeBySlug(slug);
 
   if (!maybeSede) {
     notFound();

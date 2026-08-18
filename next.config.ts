@@ -48,6 +48,11 @@ const nextConfig: NextConfig = {
         hostname: "clicfit.ar",
         pathname: "/wp-content/**",
       },
+      {
+        protocol: "https",
+        hostname: "app.clicpilates.com",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useState,
+  useSyncExternalStore,
   type ButtonHTMLAttributes,
 } from "react";
 import { createPortal } from "react-dom";
@@ -15,6 +16,8 @@ import { cn } from "@/lib/utils";
 
 type Ctx = { open: () => void; close: () => void };
 const ClaseGratisCtx = createContext<Ctx | null>(null);
+
+const emptySubscribe = () => () => {};
 
 function useClaseGratisModal(): Ctx {
   const ctx = useContext(ClaseGratisCtx);
@@ -32,9 +35,7 @@ export function ClaseGratisProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);

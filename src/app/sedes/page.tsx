@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { sedes } from "@/lib/content/sedes";
+import { getDynamicSedes } from "@/lib/content/sedes";
 import { LinkButton } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import fs from "node:fs";
@@ -22,7 +22,15 @@ function publicFileExists(p: string): boolean {
   }
 }
 
-export default function SedesPage() {
+function isImageAvailable(p?: string | null): boolean {
+  if (!p) return false;
+  if (p.startsWith("http://") || p.startsWith("https://")) return true;
+  return publicFileExists(p);
+}
+
+export default async function SedesPage() {
+  const dynamicSedes = await getDynamicSedes();
+
   return (
     <>
       {/* Hero section */}
@@ -45,8 +53,8 @@ export default function SedesPage() {
 
       {/* Sedes list section */}
       <section className="bg-ink">
-        {sedes.map((sede, index) => {
-          const imageExists = publicFileExists(sede.heroImage);
+        {dynamicSedes.map((sede, index) => {
+          const imageExists = isImageAvailable(sede.heroImage);
           const isEvenIndex = index % 2 === 0;
 
           return (
