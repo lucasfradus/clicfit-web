@@ -18,7 +18,7 @@ export function SedeDisciplinasStrip({ sede }: { sede: Sede }) {
           turno, elegís.
         </p>
 
-        <div className="grid grid-cols-1 border-t border-cream/10 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 border-t border-cream/10 sm:grid-cols-3 lg:grid-cols-6">
           {sede.disciplines.map((slug) => {
             const disciplina = disciplinas.find((d) => d.slug === slug);
             if (!disciplina) return null;

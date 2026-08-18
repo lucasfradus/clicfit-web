@@ -1,4 +1,4 @@
-const PHRASE = "CROSSFIT ✦ FUNCIONAL ✦ HIIT ✦ GAP ✦ FUERZA ✦";
+const PHRASE = "CROSSFIT ✦ FUNCIONAL ✦ HIIT ✦ GAP ✦ FUERZA ✦ HÍBRIDA ✦";
 const REPEATS = 4;
 
 export function Marquee() {

@@ -17,7 +17,7 @@ export function Disciplinas() {
           </div>
           <div className="flex lg:items-end">
             <p className="max-w-md text-lg leading-relaxed text-cream/70">
-              Cinco modalidades, un mismo objetivo: que cumplas el tuyo.
+              Seis modalidades, un mismo objetivo: que cumplas el tuyo.
               Combinalas según tu semana, tu energía y tu meta.
             </p>
           </div>

@@ -51,7 +51,7 @@ const sedesStatic: SedeStatic[] = [
     phone: "+54 9 11 2689-4398",
     email: "tortugas@clicfit.ar",
     amenities: ["Vestuarios", "Duchas", "Estacionamiento propio"],
-    disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
+    disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza", "hibrida"],
     heroImage: "/img/sedes/tortugas/hero.jpeg",
     gallery: [
       "/img/sedes/tortugas/1.jpeg",
@@ -96,7 +96,7 @@ const sedesStatic: SedeStatic[] = [
     phone: "+54 9 11 2689-4398",
     email: "pilar@clicfit.ar",
     amenities: ["Vestuarios", "Duchas", "Estacionamiento"],
-    disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
+    disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza", "hibrida"],
     heroImage: "/img/sedes/pilar/hero.jpeg",
     gallery: [],
     transport: [
@@ -127,7 +127,7 @@ const sedesStatic: SedeStatic[] = [
     phone: "+54 9 11 2689-4398",
     email: "officepark@clicfit.ar",
     amenities: ["Vestuarios", "Duchas", "Estacionamiento"],
-    disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza"],
+    disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza", "hibrida"],
     heroImage: "/img/sedes/office/hero.jpeg",
     gallery: [
       "/img/sedes/office/1.jpeg",
@@ -171,6 +171,57 @@ export const sedes: Sede[] = sedesStatic.map((s) => {
 
 export function getSedeBySlug(slug: string): Sede | null {
   return sedes.find((s) => s.slug === slug) ?? null;
+}
+
+/**
+ * Convierte una sede nueva del backend que no existe en el código estático
+ * en un objeto Sede completo para que aparezca automáticamente en la web.
+ */
+export function backendSedeToFullSede(b: import("@/lib/reservas/types").Sede): Sede {
+  let whatsappNumber = "5491126894398";
+  if (b.whatsappUrl) {
+    const digits = b.whatsappUrl.replace(/\D/g, "");
+    if (digits.length >= 10) whatsappNumber = digits;
+  }
+
+  return {
+    slug: b.slug,
+    backendSlug: b.slug,
+    name: b.nombre,
+    zone: b.localidad || b.ciudad || b.nombre,
+    address: {
+      street: b.direccion || "",
+      locality: b.ciudad || b.localidad || "Buenos Aires",
+      postalCode: "",
+      region: "Buenos Aires",
+      country: "AR",
+    },
+    coordinates: { lat: -34.44, lng: -58.88 },
+    phone: b.telefono || "+54 9 11 2689-4398",
+    whatsappNumber,
+    email: b.email || "info@clicfit.ar",
+    hours: {
+      weekdays: {
+        opens: b.horaApertura || "07:00",
+        closes: b.horaCierre || "21:00",
+      },
+      saturday: { opens: "09:00", closes: "12:00" },
+      sunday: null,
+    },
+    amenities: ["Vestuarios", "Duchas", "Estacionamiento"],
+    disciplines: ["crossfit", "funcional", "hiit", "gap", "fuerza", "hibrida"],
+    heroImage: b.imagenUrl || "/img/sedes/hero.jpg",
+    gallery: b.fotos || [],
+    transport: [],
+    featured:
+      b.caracteristicasWeb && b.caracteristicasWeb.length > 0
+        ? b.caracteristicasWeb
+        : [
+            "Entrenamiento personalizado",
+            "Horario extendido",
+            "Comunidad CLIC FIT",
+          ],
+  };
 }
 
 /**
@@ -224,18 +275,26 @@ export function mergeSedeWithBackend(staticSede: Sede, backendSede?: import("@/l
 
 /**
  * Obtiene la lista completa de sedes con los datos dinámicos del backend.
+ * Si se crea una nueva sede en el backend, se agrega automáticamente a la lista.
  * Si la API no responde, devuelve la lista estática como fallback seguro.
  */
 export async function getDynamicSedes(): Promise<Sede[]> {
   try {
     const { getSedesFitness } = await import("@/lib/reservas/api");
     const backendSedes = await getSedesFitness({ contexto: "web", revalidate: 60 });
-    return sedes.map((s) => {
+    const matchedStatic = sedes.map((s) => {
       const bs = backendSedes.find(
         (b) => b.slug === s.slug || b.slug === s.backendSlug,
       );
       return mergeSedeWithBackend(s, bs);
     });
+
+    // Nuevas sedes creadas en el backend que no existen en el código estático
+    const newFromBackend = backendSedes
+      .filter((b) => !sedes.some((s) => s.slug === b.slug || s.backendSlug === b.slug))
+      .map(backendSedeToFullSede);
+
+    return [...matchedStatic, ...newFromBackend];
   } catch {
     return sedes;
   }
@@ -243,18 +302,25 @@ export async function getDynamicSedes(): Promise<Sede[]> {
 
 /**
  * Obtiene una sede por slug enriquecida con los datos del backend.
+ * Si la sede es nueva del backend, la construye automáticamente.
  */
 export async function getDynamicSedeBySlug(slug: string): Promise<Sede | null> {
   const staticSede = getSedeBySlug(slug);
-  if (!staticSede) return null;
 
   try {
     const { getSedesFitness } = await import("@/lib/reservas/api");
     const backendSedes = await getSedesFitness({ contexto: "web", revalidate: 60 });
     const bs = backendSedes.find(
-      (b) => b.slug === staticSede.slug || b.slug === staticSede.backendSlug,
+      (b) => b.slug === slug || (staticSede && b.slug === staticSede.backendSlug),
     );
-    return mergeSedeWithBackend(staticSede, bs);
+
+    if (staticSede) {
+      return mergeSedeWithBackend(staticSede, bs);
+    }
+    if (bs) {
+      return backendSedeToFullSede(bs);
+    }
+    return null;
   } catch {
     return staticSede;
   }

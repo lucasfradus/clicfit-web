@@ -27,8 +27,8 @@ export function SedeSchedule({ sede }: { sede: Sede }) {
         </h2>
         <p className="text-lg text-cream/70 max-w-xl mb-16">
           Cada turno dura una hora. Elegí el que te quede mejor y dentro del
-          horario podés optar por CrossFit, Funcional, HIIT, GAP o Fuerza.
-          Reservá con al menos 24 hs de anticipación.
+          horario podés optar por CrossFit, Funcional, HIIT, GAP, Fuerza o
+          Híbrida. Reservá con al menos 24 hs de anticipación.
         </p>
 
         {/* Table */}
