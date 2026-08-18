@@ -40,12 +40,12 @@ export default async function SedesPage() {
             Sedes
           </p>
           <h1 className="display text-[clamp(56px,12vw,160px)] leading-[0.85]">
-            Tres sedes.
+            {dynamicSedes.length > 3 ? `${dynamicSedes.length} sedes.` : "Tres sedes."}
             <br />
             <span className="italic-serif">Una</span> comunidad.
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-relaxed text-cream/70">
-            Todas nuestras sedes están en zona norte y dictan las 5 modalidades.
+            Todas nuestras sedes están en zona norte y dictan todas las modalidades.
             Elegí la más cercana y reservá tu primera clase gratis.
           </p>
         </div>

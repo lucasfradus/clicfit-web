@@ -98,6 +98,24 @@ export const disciplinas: Disciplina[] = [
       "Para quien quiere construir músculo de forma planificada, recuperar masa muscular perdida o simplemente ser más fuerte en su día a día.",
     heroImage: "/img/disciplinas/fuerza.jpg",
   },
+  {
+    slug: "hibrida",
+    name: "Híbrida",
+    short:
+      "Fuerza y acondicionamiento metabólico. Lo mejor de dos mundos.",
+    tag: "Fuerza + Resistencia",
+    description:
+      "El entrenamiento Híbrido combina el trabajo de fuerza estructurado con bloques de acondicionamiento metabólico y resistencia cardiovascular. Diseñado para desarrollar potencia muscular sin perder capacidad aeróbica, es la modalidad ideal para quienes buscan un rendimiento atlético completo y versátil.",
+    benefits: [
+      "Desarrolla fuerza y resistencia cardiovascular en simultáneo",
+      "Combina trabajo de barra, ergómetros y peso corporal",
+      "Mejora la composición corporal y la capacidad atlética",
+      "Adaptable con progresiones para todos los niveles",
+    ],
+    forWho:
+      "Para quienes quieren ser fuertes y resistentes a la vez, sin tener que elegir entre fuerza pura o cardio intenso.",
+    heroImage: "/img/disciplinas/hibrida.jpg",
+  },
 ];
 
 export function getDisciplinaBySlug(slug: string): Disciplina | null {

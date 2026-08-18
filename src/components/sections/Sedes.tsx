@@ -31,7 +31,7 @@ export async function Sedes() {
             02 — Dónde
           </div>
           <h2 className="display text-5xl leading-[0.95] md:text-7xl">
-            Tres sedes.
+            {dynamicSedes.length > 3 ? `${dynamicSedes.length} sedes.` : "Tres sedes."}
             <br />
             <span className="italic-serif">Una</span> comunidad.
           </h2>
