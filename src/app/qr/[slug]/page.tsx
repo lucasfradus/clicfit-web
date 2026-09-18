@@ -92,17 +92,17 @@ export default async function PanelQrPage({ params, searchParams }: PageProps<"/
           </p>
         </div>
 
-        {stats.backend === "memoria" && (
+        {stats.backend === "archivo" && (
           <div className="mt-8 border-l-2 border-yellow bg-cream/4 p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-yellow-deep">
-              Contador sin persistencia
+              Modo prueba de concepto
             </p>
             <p className="mt-2 text-sm text-cream/70">
-              Faltan <code className="text-cream">UPSTASH_REDIS_REST_URL</code> y{" "}
-              <code className="text-cream">UPSTASH_REDIS_REST_TOKEN</code>. La redirección funciona
-              igual, pero el contador vive en la memoria del proceso que atendió el escaneo: se
-              pierde en cada deploy y ni siquiera se ve acá si esta página la atiende otra
-              instancia. Los números de abajo no sirven hasta configurar Upstash.
+              El contador se guarda en un archivo JSON, no en una base:{" "}
+              <code className="text-cream">{stats.origen}</code>. En Vercel eso vive en{" "}
+              <code className="text-cream">/tmp</code>, que es por instancia y se borra cuando la
+              recicla — los números aguantan una tanda de pruebas seguidas y después vuelven a
+              cero. Para que queden, configurar Upstash (ver <code className="text-cream">docs/qr.md</code>).
             </p>
           </div>
         )}

@@ -1,6 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // El contador de QR en modo prueba escribe un JSON con `fs`, y una ruta de
+  // archivo armada en runtime hace que el tracer meta el proyecto entero —
+  // incluidas las fotos de `public/`, casi 80 MB — adentro de la función
+  // serverless. Esto lo acota a lo que la ruta realmente necesita.
+  // Cuando el contador pase a Upstash (ver docs/qr.md) ya no hace falta.
+  // Los corchetes van escapados: las claves se matchean con picomatch, donde
+  // `[slug]` sería una clase de caracteres y no el literal del segmento.
+  outputFileTracingExcludes: {
+    "/q/\\[slug\\]": ["public/**/*"],
+    "/qr/\\[slug\\]": ["public/**/*"],
+  },
+
   async redirects() {
     return [
       {

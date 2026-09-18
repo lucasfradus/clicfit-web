@@ -11,7 +11,9 @@ en el mismo viaje.
 | `src/lib/qr/links.ts` | Los links. Fuente de verdad, en código. |
 | `src/app/q/[slug]/route.ts` | El `302` + el disparo del conteo. |
 | `src/lib/qr/request.ts` | Convierte el request en un `Escaneo` (geo, dispositivo, bot). |
-| `src/lib/qr/store.ts` | Guarda y lee de Upstash Redis. |
+| `src/lib/qr/store.ts` | Elige el backend y expone la única API que usa el resto. |
+| `src/lib/qr/store-archivo.ts` | Backend de prueba: un JSON en disco. |
+| `src/lib/qr/store-upstash.ts` | Backend de producción: Upstash Redis. |
 | `src/app/qr/[slug]/page.tsx` | Panel de métricas. |
 
 Dos decisiones que conviene no tocar sin entender por qué:
@@ -28,18 +30,68 @@ Sumar un objeto a `qrLinks` en `src/lib/qr/links.ts` y pushear a `main`. Vercel
 redeploya solo. El slug va adentro del QR: cuanto más corto, menos denso el
 código y más fácil de leer impreso chico.
 
+## Dónde se guardan los escaneos
+
+Hay dos backends detrás de la misma interfaz. **Los elige una variable de
+entorno, no un cambio de código.**
+
+### Hoy: JSON en disco (prueba de concepto)
+
+Sin las variables de Upstash, el contador escribe un JSON que se autoincrementa.
+Por defecto va al temp del sistema: `/tmp/qr-escaneos.json` en Linux y en Vercel,
+el equivalente en Mac. `QR_DATA_FILE` cambia la ruta — en local conviene ponerlo
+en `.env.local` apuntando a `.data/qr-escaneos.json` (ya está en `.gitignore`)
+para tenerlo a mano y que sobreviva a un reinicio:
+
+```bash
+echo 'QR_DATA_FILE=.data/qr-escaneos.json' >> .env.local
+```
+
+El archivo se puede abrir, mirar y editar a mano. Formato:
+
+```json
+{
+  "gorroswine": {
+    "total": 12,
+    "humanos": 9,
+    "visitantes": ["a1b2c3d4e5f6"],
+    "recientes": [{ "ts": 1758234000000, "pais": "AR", "bot": false }]
+  }
+}
+```
+
+**Esto no sirve para producción**, y no por falta de ganas:
+
+- En Vercel el filesystem del deploy es de solo lectura y `/tmp` vive por
+  instancia. Vercel las recicla cuando quiere, así que los números vuelven a cero
+  solos.
+- Dos instancias en paralelo tienen cada una su archivo. El escaneo puede caer en
+  una y el panel leer la otra.
+- Guardar un escaneo es leer el archivo, modificarlo y reescribirlo. Dentro del
+  proceso hay una cola que serializa las escrituras, pero entre instancias no hay
+  nada que las coordine.
+- Armar la ruta en runtime hace que el tracer de Next meta el proyecto entero en
+  la función serverless. Por eso `next.config.ts` tiene un
+  `outputFileTracingExcludes` para `/q/[slug]` y `/qr/[slug]`: sin él, la ruta
+  del escaneo se llevaba los 80 MB de fotos de `public/` adentro (2,1 MB con él).
+
+Para unas pruebas seguidas alcanza y sobra. Para un QR impreso circulando, no.
+
+### Después: Upstash Redis (producción)
+
+Crear la base en `console.upstash.com` (plan free) y poner en Vercel las dos
+variables de la pestaña REST API. Con eso el backend cambia solo en el próximo
+deploy y no hay una línea de código que tocar.
+
 ## Variables de entorno (Vercel → Settings → Environment Variables)
 
 | Variable | Para qué |
 | --- | --- |
-| `UPSTASH_REDIS_REST_URL` | Upstash Redis, plan free. `console.upstash.com` → Create database → pestaña REST API. |
-| `UPSTASH_REDIS_REST_TOKEN` | Idem. |
 | `QR_PANEL_TOKEN` | Abre el panel: `clicfit.ar/qr/<slug>?token=...`. Sin esta variable el panel da 404 en producción. |
 | `QR_HASH_SALT` | Opcional. Sal del hash de visitantes únicos. Cambiarla resetea el conteo de únicos. |
-
-Sin las dos de Upstash el sitio **no se rompe**: la redirección anda igual y el
-contador cae a memoria del proceso, que en Vercel no sirve para nada. El panel lo
-avisa arriba de todo.
+| `QR_DATA_FILE` | Opcional. Ruta del JSON en modo prueba. Por defecto, el temp del sistema. |
+| `UPSTASH_REDIS_REST_URL` | Vacía = modo prueba. Completarla pasa a Redis. |
+| `UPSTASH_REDIS_REST_TOKEN` | Idem. |
 
 ## Qué mide el panel
 

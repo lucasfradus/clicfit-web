@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# contador de escaneos de QR en modo prueba (ver docs/qr.md)
+/.data
+
 # vercel
 .vercel
 
