@@ -7,39 +7,19 @@ import { ApiError, getClases, getSedesFitness, reservar } from "@/lib/reservas/a
 import { getBackendSlug } from "@/lib/content/sedes";
 import type { Clase, Sede } from "@/lib/reservas/types";
 import { formatDayLong, formatTime } from "@/lib/reservas/format";
+import {
+  datosVacios,
+  limpiar,
+  validate,
+  type FormErrors,
+} from "@/lib/reservas/datos";
+import { Field } from "@/components/ui/Field";
 
 type LoadState =
   | { status: "loading" }
   | { status: "notfound" }
   | { status: "error"; message: string }
   | { status: "ok"; clase: Clase; sede: Sede };
-
-type FormErrors = Partial<
-  Record<"nombre" | "apellido" | "email" | "telefono" | "dni", string>
->;
-
-function validate(form: {
-  nombre: string;
-  apellido: string;
-  email: string;
-  telefono: string;
-  dni: string;
-}): FormErrors {
-  const errors: FormErrors = {};
-  if (!form.nombre.trim()) errors.nombre = "Ingresá tu nombre";
-  if (!form.apellido.trim()) errors.apellido = "Ingresá tu apellido";
-  if (!form.email.trim()) errors.email = "Ingresá tu email";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim()))
-    errors.email = "Email inválido";
-  if (!form.telefono.trim()) errors.telefono = "Ingresá tu teléfono";
-  else if (form.telefono.replace(/\D/g, "").length < 8)
-    errors.telefono = "Teléfono demasiado corto";
-  const dniDigits = form.dni.replace(/\D/g, "");
-  if (!form.dni.trim()) errors.dni = "Ingresá tu DNI";
-  else if (dniDigits.length < 7 || dniDigits.length > 8)
-    errors.dni = "DNI inválido";
-  return errors;
-}
 
 export default function ReservarPage() {
   const params = useParams<{ slug: string; claseId: string }>();
@@ -50,13 +30,7 @@ export default function ReservarPage() {
   const [load, setLoad] = useState<LoadState>(() =>
     Number.isFinite(claseId) ? { status: "loading" } : { status: "notfound" },
   );
-  const [form, setForm] = useState({
-    nombre: "",
-    apellido: "",
-    email: "",
-    telefono: "",
-    dni: "",
-  });
+  const [form, setForm] = useState(datosVacios);
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -119,11 +93,7 @@ export default function ReservarPage() {
       const res = await reservar({
         claseId: load.clase.id,
         sedeId: load.sede.id,
-        nombre: form.nombre.trim(),
-        apellido: form.apellido.trim(),
-        email: form.email.trim(),
-        telefono: form.telefono.trim(),
-        dni: form.dni.replace(/\D/g, ""),
+        ...limpiar(form),
       });
 
       const q = new URLSearchParams({
@@ -340,30 +310,5 @@ function Shell({ children }: { children: React.ReactNode }) {
     <section className="min-h-screen bg-ink pb-24 pt-32 md:pt-40">
       <div className="container-clic">{children}</div>
     </section>
-  );
-}
-
-function Field({
-  label,
-  error,
-  ...rest
-}: {
-  label: string;
-  error?: string;
-} & React.InputHTMLAttributes<HTMLInputElement>) {
-  return (
-    <label className="block">
-      <span className="mb-2 block text-xs uppercase tracking-[0.2em] text-cream/60">
-        {label}
-      </span>
-      <input
-        {...rest}
-        className={
-          "w-full border bg-transparent px-4 py-3 text-cream outline-none transition-colors placeholder:text-cream/30 focus:border-yellow " +
-          (error ? "border-red-400/70" : "border-cream/20")
-        }
-      />
-      {error && <span className="mt-1 block text-xs text-red-400">{error}</span>}
-    </label>
   );
 }

@@ -5,6 +5,7 @@ import { NutricionProcess } from "@/components/nutricion/NutricionProcess";
 import { NutricionIncludes } from "@/components/nutricion/NutricionIncludes";
 import { NutricionDifferential } from "@/components/nutricion/NutricionDifferential";
 import { NutricionSedes } from "@/components/nutricion/NutricionSedes";
+import { NutricionNoSocio } from "@/components/nutricion/NutricionNoSocio";
 import { NutricionCtaFinal } from "@/components/nutricion/NutricionCtaFinal";
 import { nutricionServiceSchema, breadcrumbSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/content/site";
@@ -46,6 +47,7 @@ export default function NutricionPage() {
       <NutricionIncludes />
       <NutricionDifferential />
       <NutricionSedes />
+      <NutricionNoSocio />
       <NutricionCtaFinal />
     </>
   );

@@ -80,6 +80,14 @@ export const nutricion = {
     italic: "membresía.",
     desc: "La mayoría de los gimnasios cobran las consultas nutricionales aparte. Nosotros no. Si sos parte de CLIC FIT, la nutrición es parte del combo — no hay packs adicionales ni extras que aparecen después.",
   },
+
+  noSocio: {
+    eyebrow: "¿No sos socio?",
+    display: "Sacá tu turno",
+    italic: "de nutrición.",
+    desc: "También atendemos a quienes no entrenan en CLIC FIT. Elegí la consulta, el día y el horario, y reservá tu lugar pagando una seña online con Mercado Pago. El resto se lo pagás al profesional el día de la consulta.",
+    cta: "Sacar turno",
+  },
 } as const;
 
 export type Nutricion = typeof nutricion;
