@@ -1,6 +1,8 @@
 export const siteConfig = {
   name: "CLIC FIT",
   url: "https://clicfit.ar",
+  /** Web de socios (clic-webapp-clientes, tenant fit). */
+  clientesUrl: "https://clientes.clicfit.ar",
   tagline: "El lugar donde tus hábitos cambian",
   description:
     "Entrenamiento y nutrición en zona norte. CrossFit, Funcional, HIIT, GAP y Fuerza. 3 sedes: Tortugas, Pilar y Office Park.",

@@ -59,11 +59,17 @@ export function NutricionHero() {
           .
         </p>
 
-        <div className="mt-10">
+        <div className="mt-10 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8">
           <ClaseGratisButton variant="primary">
             <WhatsAppIcon className="size-5" />
             Probá una clase gratis
           </ClaseGratisButton>
+          <Link
+            href="/nutricion/turno"
+            className="text-xs uppercase tracking-[0.2em] text-cream/70 transition-colors hover:text-yellow"
+          >
+            ¿No sos socio? Sacá tu turno de nutrición →
+          </Link>
         </div>
       </div>
     </section>
