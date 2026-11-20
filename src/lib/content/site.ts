@@ -16,6 +16,10 @@ export const siteConfig = {
   titular: {
     nombre: "Lucas Luis Fradusco",
     cuit: "20-35378060-4",
+    domicilio:
+      "Sanguinetti 465, Pilar (CP 1629), Provincia de Buenos Aires, Argentina",
+    /** Casilla para pedidos de privacidad y eliminación de datos. */
+    emailPrivacidad: "lucas@clicfit.ar",
   },
   logoUrl: "/img/logo-white.png",
 } as const;

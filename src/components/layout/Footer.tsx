@@ -56,7 +56,15 @@ export function Footer() {
           <div>
             {siteConfig.titular.nombre} · CUIT: {siteConfig.titular.cuit}
           </div>
-          <div>Todos los derechos reservados</div>
+          <div>
+            Todos los derechos reservados ·{" "}
+            <Link
+              href="/privacidad"
+              className="underline underline-offset-2 transition-colors hover:text-yellow"
+            >
+              Privacidad
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
