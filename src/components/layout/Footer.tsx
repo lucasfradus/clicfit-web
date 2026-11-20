@@ -53,6 +53,9 @@ export function Footer() {
 
         <div className="flex flex-col gap-2 border-t border-cream/10 pt-5 text-xs text-cream/40 sm:flex-row sm:justify-between">
           <div>© {new Date().getFullYear()} CLICFIT</div>
+          <div>
+            {siteConfig.titular.nombre} · CUIT: {siteConfig.titular.cuit}
+          </div>
           <div>Todos los derechos reservados</div>
         </div>
       </div>

@@ -12,6 +12,11 @@ export const siteConfig = {
   instagram: "https://instagram.com/clic.fit",
   tiktok: "https://www.tiktok.com/@clicfit",
   since: 2022,
+  /** Titular del sitio (datos fiscales que se muestran en el footer). */
+  titular: {
+    nombre: "Lucas Luis Fradusco",
+    cuit: "20-35378060-4",
+  },
   logoUrl: "/img/logo-white.png",
 } as const;
 
