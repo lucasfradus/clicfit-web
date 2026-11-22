@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/content/site";
 
-const ULTIMA_ACTUALIZACION = "20 de noviembre de 2026";
+const ULTIMA_ACTUALIZACION = "22 de noviembre de 2026";
 
 export const metadata: Metadata = {
   title: "Política de privacidad de ClicNet",
   description:
-    "Cómo ClicNet, la plataforma de gestión de la red Clic, recopila, usa, comparte y protege los datos personales, incluidos los mensajes de WhatsApp de las sedes.",
+    "Cómo ClicNet, la plataforma de gestión de la red Clic, recopila, usa, comparte y protege los datos personales, incluidos los mensajes de WhatsApp, Instagram y Messenger de las sedes.",
   alternates: { canonical: "/privacidad" },
   openGraph: {
     title: "Política de privacidad de ClicNet",
@@ -46,8 +46,9 @@ export default function PrivacidadPage() {
               Esta política explica cómo ClicNet, la plataforma de gestión que
               usan los estudios y centros de la red Clic (Clic Fitness, Clic
               Studio Pilates y sedes asociadas), recopila, usa, comparte y
-              protege los datos personales, incluidos los mensajes de WhatsApp
-              que las sedes gestionan desde la plataforma.
+              protege los datos personales, incluidos los mensajes de WhatsApp,
+              Instagram y Messenger y los comentarios en redes sociales que las
+              sedes gestionan desde la plataforma.
             </p>
 
             <Titulo>1. Responsable</Titulo>
@@ -99,6 +100,21 @@ export default function PrivacidadPage() {
                 previos y la lista de contactos de su cuenta de WhatsApp
                 Business.
               </li>
+              <li>
+                <strong>Mensajes directos de Instagram y de Messenger</strong>{" "}
+                intercambiados con las cuentas de Instagram y las páginas de
+                Facebook de la marca: texto, archivos multimedia, fecha y hora y
+                estado de lectura.
+              </li>
+              <li>
+                <strong>Comentarios</strong> hechos en las publicaciones de esas
+                cuentas de Instagram y páginas de Facebook, y las respuestas que
+                reciben.
+              </li>
+              <li>
+                El <strong>nombre, nombre de usuario y foto de perfil</strong>{" "}
+                públicos de Instagram o Facebook de quien escribe o comenta.
+              </li>
             </Lista>
             <p>
               No tratamos datos sensibles de salud. Si un cliente los comparte
@@ -109,7 +125,12 @@ export default function PrivacidadPage() {
             <Lista>
               <li>
                 Permitir que cada sede envíe, reciba y responda mensajes de
-                WhatsApp desde ClicNet.
+                WhatsApp, Instagram y Messenger desde ClicNet.
+              </li>
+              <li>
+                Permitir que cada sede lea, responda y modere los comentarios de
+                sus publicaciones de Instagram y Facebook, en público o por
+                mensaje privado.
               </li>
               <li>
                 Asociar las conversaciones con la ficha del cliente o potencial
@@ -139,9 +160,12 @@ export default function PrivacidadPage() {
             <Titulo>4. Con quién compartimos datos</Titulo>
             <Lista>
               <li>
-                <strong>Meta Platforms (WhatsApp Business Platform):</strong>{" "}
-                los mensajes se envían y reciben a través de la API oficial de
-                WhatsApp, sujeta a las políticas de Meta.
+                <strong>
+                  Meta Platforms (WhatsApp Business Platform, Messenger Platform
+                  y API de Instagram):
+                </strong>{" "}
+                los mensajes y comentarios se envían y reciben a través de las
+                API oficiales de Meta, sujetas a las políticas de Meta.
               </li>
               <li>
                 <strong>Proveedores de infraestructura:</strong> servidores y
@@ -179,8 +203,9 @@ export default function PrivacidadPage() {
                 tenga activo el servicio.
               </li>
               <li>
-                Si una sede desconecta su número de WhatsApp o deja de usar
-                ClicNet, sus conversaciones se eliminan dentro de los{" "}
+                Si una sede desconecta su número de WhatsApp o sus cuentas de
+                Instagram y Facebook, o deja de usar ClicNet, sus conversaciones
+                y comentarios se eliminan dentro de los{" "}
                 <strong>90 días</strong>, salvo que la sede pida exportarlas
                 antes o que una obligación legal exija conservarlas.
               </li>
@@ -191,8 +216,8 @@ export default function PrivacidadPage() {
             <p>
               Usamos conexiones cifradas (HTTPS/TLS), control de acceso por
               usuario y rol, separación de datos por sede y registros de
-              actividad. Las credenciales de acceso a WhatsApp se guardan
-              cifradas.
+              actividad. Las credenciales de acceso a WhatsApp, Instagram y
+              Facebook se guardan cifradas.
             </p>
 
             <Titulo>7. Tus derechos</Titulo>
@@ -231,8 +256,8 @@ export default function PrivacidadPage() {
                 &quot;Eliminación de datos&quot;.
               </li>
               <li>
-                Indicá tu nombre, el número de teléfono con el que te
-                comunicaste y la sede.
+                Indicá tu nombre, la sede o marca, y el número de teléfono o el
+                usuario de Instagram o Facebook con el que te comunicaste.
               </li>
               <li>
                 Confirmamos la recepción y eliminamos los datos dentro de los{" "}
@@ -245,6 +270,13 @@ export default function PrivacidadPage() {
               momento desde la app de WhatsApp Business (Configuración › Cuenta
               › Plataforma empresarial) o desde ClicNet. A partir de ese momento
               ClicNet deja de recibir sus mensajes.
+            </p>
+            <p>
+              Las cuentas de Instagram y las páginas de Facebook se pueden
+              desconectar desde ClicNet o quitando la aplicación en la
+              configuración de la página de Facebook (Integraciones
+              comerciales). A partir de ese momento ClicNet deja de recibir sus
+              mensajes y comentarios.
             </p>
 
             <Titulo>9. Cambios en esta política</Titulo>
