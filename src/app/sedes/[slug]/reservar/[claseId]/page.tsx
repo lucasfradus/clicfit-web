@@ -14,6 +14,7 @@ import {
   type FormErrors,
 } from "@/lib/reservas/datos";
 import { Field } from "@/components/ui/Field";
+import { leerGclid, medir } from "@/lib/medicion";
 
 type LoadState =
   | { status: "loading" }
@@ -94,6 +95,17 @@ export default function ReservarPage() {
         claseId: load.clase.id,
         sedeId: load.sede.id,
         ...limpiar(form),
+        ...leerGclid(),
+      });
+
+      // Acá y no en /reserva-confirmada: sólo con la reserva hecha, una vez, y
+      // sin que un F5 o un link compartido de la confirmación la cuente de nuevo.
+      medir("generate_lead", {
+        sede: slug,
+        actividad: res.actividad,
+        tipo_lead: "clase_prueba",
+        value: 0,
+        currency: "ARS",
       });
 
       const q = new URLSearchParams({
