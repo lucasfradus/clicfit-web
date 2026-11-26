@@ -55,6 +55,14 @@ export interface ReservarPayload {
   email: string;
   telefono: string;
   dni: string;
+  /**
+   * Click id de Google Ads (uno de los tres), si la visita vino de un anuncio.
+   * Para importar a Ads las pruebas que terminan en socio. Hoy Clicnet todavía
+   * no lo guarda (zod lo descarta sin error).
+   */
+  gclid?: string;
+  gbraid?: string;
+  wbraid?: string;
 }
 
 export interface ReservaResponse {

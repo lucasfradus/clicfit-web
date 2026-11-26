@@ -6,6 +6,7 @@ import { siteConfig } from "@/lib/content/site";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { Medicion } from "@/components/layout/Medicion";
 import { ClaseGratisProvider } from "@/components/ui/ClaseGratisModal";
 
 const anton = Anton({
@@ -94,6 +95,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
+        <Medicion />
       </body>
     </html>
   );
